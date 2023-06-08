@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Σε ποιά συνέδρια συμμετείχε η πιλότος Νικολάου;</title>    
+    <title>Σε ποια συνέδρια συμμετείχε η πιλότος Νικολάου;</title>    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -84,7 +84,7 @@
         <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
     </nav>
         
-    <h2 style="text-align: center;">Σε ποιά συνέδρια συμμετείχε η πιλότος Νικολάου;</h2>
+    <h2 style="text-align: center;">Σε ποια συνέδρια συμμετείχε η πιλότος Νικολάου;</h2>
 
 
     <table class="grid-container center-table">
@@ -93,25 +93,25 @@
             <th>Θεματικές ενότητες των συνεδριών</th>
         </tr>
         <?php
-            // include the file with DB connection
+            
             include 'connDB.php';
 
             if ($conn->connect_error) {
                 die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
             }
 
-            // SQL query to execute
+            
             $sql = "SELECT meeting_date, meeting_subject
                     FROM pilot_meetings
                     WHERE pilots_surname = 'Nikolaou'
                     ORDER BY meeting_date ASC;";
 
-            // Execute the query and get the results
+            
             $result = $conn->query($sql);
 
-            // Check if there are any results
+           
             if ($result->num_rows > 0) {
-                // Fetch each row and display it in the table
+                
                 while ($row = $result->fetch_assoc()) {
                     $meeting_date = $row['meeting_date'];
                     $meeting_subject = $row['meeting_subject'];
@@ -127,12 +127,12 @@
                 echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για την παραπάνω πιλότο 😞</td></tr>';
             }
 
-            // Close the connection to the database
+            
             $conn->close();
         ?>
     </table>
 
-    <!-- Return link -->
+    
     <div class="return-link">
         <a href="index.html">Επιστροφή στην αρχική σελίδα</a>
     </div>

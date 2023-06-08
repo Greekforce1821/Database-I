@@ -93,23 +93,23 @@
             <th>Μέσο κόστος ενοικίασης</th>
         </tr>
         <?php
-            // include the file with DB connection
+            
             include 'connDB.php';
 
             if ($conn->connect_error) {
                 die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
             }
 
-            // SQL query to execute
+            
             $sql = "SELECT COUNT(*) AS rented_count, AVG(rent_amount) AS avg_rent
                     FROM rented_spaces";
 
-            // Execute the query and get the results
+            
             $result = $conn->query($sql);
 
-            // Check if there are any results
+            
             if ($result->num_rows > 0) {
-                // Fetch each row and display it in the table
+                
                 while ($row = $result->fetch_assoc()) {
                     $rented_count = $row['rented_count'];
                     $avg_rent = $row['avg_rent'];
@@ -124,12 +124,12 @@
                 echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για τους παραπάνω χώρους ενοικίασης 😞</td></tr>';
             }
 
-            // Close the connection to the database
+            
             $conn->close();
         ?>
     </table>
 
-    <!-- Return link -->
+
     <div class="return-link">
         <a href="index.html">Επιστροφή στην αρχική σελίδα</a>
     </div>

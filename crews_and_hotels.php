@@ -17,6 +17,10 @@
             text-align: center;
         }
 
+        ::placeholder {
+            text-align: center;
+        }
+
         .logo-image {
             position: absolute;
             top: 1px;
@@ -72,6 +76,27 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .search-form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #f2f2f2;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -86,6 +111,16 @@
         
     <h2 style="text-align: center;">Ποια είναι τα πληρώματα των πτήσεων που αναχωρούν στις 13/06/2023 από Αθήνα για Κέρκυρα και σε ποιο ξενοδοχείο μένουν;</h2>
 
+    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="search-form">
+        <br><br>
+        <input type="text" id="origin" name="origin" class="search-input" placeholder="Origin -> Athens" required>
+        <br><br>
+        <input type="text" id="destination" name="destination" class="search-input" placeholder="Destination -> Corfu" required>
+        <br><br>
+        <input type="date" id="date" name="date" class="search-input" placeholder="Ημερομηνία" required>
+        <br><br>
+        <button type="submit" class="search-button">Αναζήτηση</button>
+    </form>
 
     <table class="grid-container center-table">
         <tr>
@@ -95,51 +130,58 @@
             <th>Επωνυμίες ξενοδοχείων</th>
         </tr>
         <?php
-            // include the file with DB connection
+            
             include 'connDB.php';
 
             if ($conn->connect_error) {
                 die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
             }
 
-            // SQL query to execute
-            $sql = "SELECT crew.crews_id, crew.crew_name, crew.crew_surname, hotels.hotels_name
-                    FROM crew 
-                    INNER JOIN flights_crews ON flights_crews.crew_id = crew.crews_id
-                    INNER JOIN flights ON flights.flights_id = flights_crews.flight_id
-                    INNER JOIN hotels ON hotels.hotels_id = flights_crews.hotel_id
-                    WHERE flights.date = '2023-06-13' AND flights.origin = 'Athens' AND flights.destination = 'Corfu';";
+            
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $date = $_POST["date"];
+                $origin = $_POST["origin"];
+                $destination = $_POST["destination"];
 
-            // Execute the query and get the results
-            $result = $conn->query($sql);
+                
+                $sql = "SELECT crew.crews_id, crew.crew_name, crew.crew_surname, hotels.hotels_name
+                        FROM crew 
+                        INNER JOIN flights_crews ON flights_crews.crew_id = crew.crews_id
+                        INNER JOIN flights ON flights.flights_id = flights_crews.flight_id
+                        INNER JOIN hotels ON hotels.hotels_id = flights_crews.hotel_id
+                        WHERE flights.date = '$date' AND flights.origin = '$origin' AND flights.destination = '$destination';";
 
-            // Check if there are any results
-            if ($result->num_rows > 0) {
-                // Fetch each row and display it in the table
-                while ($row = $result->fetch_assoc()) {
-                    $crews_id = $row['crews_id'];
-                    $crew_name = $row['crew_name'];
-                    $crew_surname = $row['crew_surname'];
-                    $hotels_name = $row['hotels_name'];
+                
+                $result = $conn->query($sql);
 
-                    echo '<tr>
-                            <td>' . $crews_id . '</td>
-                            <td>' . $crew_name . '</td>
-                            <td>' . $crew_surname . '</td>
-                            <td>' . $hotels_name . '</td>
-                        </tr>';
+                
+                if ($result->num_rows > 0) {
+                    
+                    while ($row = $result->fetch_assoc()) {
+                        $crews_id = $row['crews_id'];
+                        $crew_name = $row['crew_name'];
+                        $crew_surname = $row['crew_surname'];
+                        $hotels_name = $row['hotels_name'];
+
+                        echo '<tr>
+                                <td>' . $crews_id . '</td>
+                                <td>' . $crew_name . '</td>
+                                <td>' . $crew_surname . '</td>
+                                <td>' . $hotels_name . '</td>
+                            </tr>';
+                    }
+
+                } else {
+                    echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για τα παραπάνω πληρώματα 😞</td></tr>';
                 }
-
-            } else {
-                echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για τα παραπάνω πληρώματα 😞</td></tr>';
             }
 
-            // Close the connection to the database
+            
             $conn->close();
         ?>
     </table>
 
-    <!-- Return link -->
+    
     <div class="return-link">
         <a href="index.html">Επιστροφή στην αρχική σελίδα</a>
     </div>

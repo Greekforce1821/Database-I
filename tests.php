@@ -98,24 +98,24 @@
             <th>Αποτελέσματα των Test</th>
         </tr>
         <?php
-            // include the file with DB connection
+           
             include 'connDB.php';
 
             if ($conn->connect_error) {
                 die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
             }
 
-            // SQL query to execute
+            
             $sql = "SELECT tests.*, planes.*
                     FROM flights, tests, planes
                     WHERE flights.origin = 'Athens' AND flights.date = '2023-03-18';";
 
-            // Execute the query and get the results
+            
             $result = $conn->query($sql);
 
-            // Check if there are any results
+           
             if ($result->num_rows > 0) {
-                // Fetch each row and display it in the table
+                
                 while ($row = $result->fetch_assoc()) {
                     $tests_id = $row['tests_id'];
                     $test_name = $row['test_name'];
@@ -141,12 +141,12 @@
                 echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για τα παραπάνω Test 😞</td></tr>';
             }
 
-            // Close the connection to the database
+            
             $conn->close();
         ?>
     </table>
 
-    <!-- Return link -->
+    
     <div class="return-link">
         <a href="index.html">Επιστροφή στην αρχική σελίδα</a>
     </div>

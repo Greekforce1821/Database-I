@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>Ποιοί ταξιδιώτες ταξιδεύουν προς την Αθήνα στις 17/04/2023;</title>    
+    <title>Ποιοι ταξιδιώτες ταξιδεύουν προς την Αθήνα στις 17/04/2023;</title>    
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -84,7 +84,7 @@
         <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
     </nav>
         
-    <h2 style="text-align: center;">Ποιοί ταξιδιώτες ταξιδεύουν προς την Αθήνα στις 17/04/2023;</h2>
+    <h2 style="text-align: center;">Ποιοι ταξιδιώτες ταξιδεύουν προς την Αθήνα στις 17/04/2023;</h2>
 
 
     <table class="grid-container center-table">
@@ -101,14 +101,14 @@
             <th>Ημερομηνία πτήσεων</th>
         </tr>
         <?php
-            // include the file with DB connection
+            
             include 'connDB.php';
 
             if ($conn->connect_error) {
                 die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
             }
 
-            // SQL query to execute
+            
             $sql = "SELECT passengers.passengers_id, tickets.tickets_id, passengers.name, passengers.surname, passengers.address, passengers.age, passengers.income, passengers.num_credit_cards, flights.flight_number, flights.date
                     FROM passengers
                     INNER JOIN tickets ON tickets.passenger_id = passengers.passengers_id
@@ -116,12 +116,12 @@
                     WHERE flights.date = '2023-04-17' AND flights.destination = 'Athens'
                     ORDER BY flights.flight_number, tickets.tickets_id;";
 
-            // Execute the query and get the results
+            
             $result = $conn->query($sql);
 
-            // Check if there are any results
+            
             if ($result->num_rows > 0) {
-                // Fetch each row and display it in the table
+                
                 while ($row = $result->fetch_assoc()) {
                     $id = $row['passengers_id'];
                     $tickets_id = $row['tickets_id'];
@@ -153,12 +153,12 @@
                 echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για τους παραπάνω επιβάτες 😞</td></tr>';
             }
 
-            // Close the connection to the database
+            
             $conn->close();
         ?>
     </table>
 
-    <!-- Return link -->
+    
     <div class="return-link">
         <a href="index.html">Επιστροφή στην αρχική σελίδα</a>
     </div>
