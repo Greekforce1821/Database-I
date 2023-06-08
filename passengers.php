@@ -72,6 +72,27 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .search-form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #f2f2f2;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -79,14 +100,23 @@
         <h1>Airport DB User Group III</h1>
     </header>
 
-    <nav>
-        <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
-        <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
-    </nav>
-        
     <h2 style="text-align: center;">Ποιοι ταξιδιώτες ταξιδεύουν προς την Αθήνα στις 17/04/2023;</h2>
 
+    <nav>
+         <form class="search-form" method="POST" action="">
+            <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
+            <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
+            <br><br>
+            <input type="text" id="origin" name="origin" class="search-input" placeholder="Destination -> Athens" required>
+            <br><br>
 
+            <input type="date" id="date" name="date" class="search-input" placeholder="Ημερομηνία" required>
+            <br><br>
+            <button type="submit" class="search-button">Αναζήτηση</button>
+        </form>
+    </form>
+    </nav>
+        
     <table class="grid-container center-table">
         <tr>
             <th>Αριθμός Επιβατών</th>
@@ -109,31 +139,35 @@
             }
 
             
-            $sql = "SELECT passengers.passengers_id, tickets.tickets_id, passengers.name, passengers.surname, passengers.address, passengers.age, passengers.income, passengers.num_credit_cards, flights.flight_number, flights.date
-                    FROM passengers
-                    INNER JOIN tickets ON tickets.passenger_id = passengers.passengers_id
-                    INNER JOIN flights ON flights.flights_id = tickets.ticket_flight_id
-                    WHERE flights.date = '2023-04-17' AND flights.destination = 'Athens'
-                    ORDER BY flights.flight_number, tickets.tickets_id;";
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $origin = $_POST["origin"];
+                $date = $_POST['date'];
 
-            
-            $result = $conn->query($sql);
-
-            
-            if ($result->num_rows > 0) {
                 
-                while ($row = $result->fetch_assoc()) {
-                    $id = $row['passengers_id'];
-                    $tickets_id = $row['tickets_id'];
-                    $name = $row['name'];
-                    $surname = $row['surname'];
-                    $address = $row['address'];
-                    $age = $row['age'];
-                    $income = $row['income'];
-                    $num_credit_cards = $row['num_credit_cards'];
-                    $flight_number = $row['flight_number'];
-                    $date = $row['date'];
-                    
+                $sql = "SELECT passengers.passengers_id, tickets.tickets_id, passengers.name, passengers.surname, passengers.address, passengers.age, passengers.income, passengers.num_credit_cards, flights.flight_number, flights.date
+                        FROM passengers
+                        INNER JOIN tickets ON tickets.passenger_id = passengers.passengers_id
+                        INNER JOIN flights ON flights.flights_id = tickets.ticket_flight_id
+                        WHERE flights.destination = '$origin' AND flights.date = '$date'
+                        ORDER BY flights.flight_number, tickets.tickets_id;";
+
+                
+                $result = $conn->query($sql);
+
+                
+                if ($result->num_rows > 0) {
+                   
+                    while ($row = $result->fetch_assoc()) {
+                        $id = $row['passengers_id'];
+                        $tickets_id = $row['tickets_id'];
+                        $name = $row['name'];
+                        $surname = $row['surname'];
+                        $address = $row['address'];
+                        $age = $row['age'];
+                        $income = $row['income'];
+                        $num_credit_cards = $row['num_credit_cards'];
+                        $flight_number = $row['flight_number'];
+                        $date = $row['date'];
 
                         echo '<tr>
                             <td>' . $id . '</td>
@@ -147,10 +181,11 @@
                             <td>' . $flight_number . '</td>
                             <td>' . $date . '</td>
                         </tr>';
-                }
+                    }
 
-            } else {
-                echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για τους παραπάνω επιβάτες 😞</td></tr>';
+                } else {
+                    echo '<tr><td colspan="10">Δεν βρέθηκαν εγγραφές για τους παραπάνω επιβάτες 😞</td></tr>';
+                }
             }
 
             
