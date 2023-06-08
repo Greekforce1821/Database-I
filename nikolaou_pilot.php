@@ -72,6 +72,27 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .search-form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #f2f2f2;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -80,8 +101,14 @@
     </header>
 
     <nav>
-        <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
-        <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
+        <form class="search-form" method="POST" action="">
+            <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
+            <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
+            <br><br>
+            <input type="text" id="surname" name="surname" class="search-input" placeholder="Surname -> Nikolaou" required>
+            <br><br>
+            <button type="submit" class="search-button">Αναζήτηση</button>
+        </form>
     </nav>
         
     <h2 style="text-align: center;">Σε ποια συνέδρια συμμετείχε η πιλότος Νικολάου;</h2>
@@ -92,6 +119,7 @@
             <th>Ημερομηνία των συνεδριών</th>
             <th>Θεματικές ενότητες των συνεδριών</th>
         </tr>
+
         <?php
             
             include 'connDB.php';
@@ -100,10 +128,13 @@
                 die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
             }
 
-            
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $surname = $_POST["surname"];
+            }
+
             $sql = "SELECT meeting_date, meeting_subject
                     FROM pilot_meetings
-                    WHERE pilots_surname = 'Nikolaou'
+                    WHERE pilots_surname = '$surname'
                     ORDER BY meeting_date ASC;";
 
             
@@ -117,14 +148,14 @@
                     $meeting_subject = $row['meeting_subject'];
                     
 
-                        echo '<tr>
-                            <td>' . $meeting_date. '</td>
-                            <td>' . $meeting_subject . '</td>
-                        </tr>';
+                    echo '<tr>
+                        <td>' . $meeting_date. '</td>
+                        <td>' . $meeting_subject . '</td>
+                    </tr>';
                 }
 
             } else {
-                echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για την παραπάνω πιλότο 😞</td></tr>';
+                echo '<tr><td colspan="2">Δεν βρέθηκαν εγγραφές για την παραπάνω πιλότο 😞</td></tr>';
             }
 
             
