@@ -36,13 +36,15 @@
         }
 
         footer {
-            background-color: #f2f2f2;
-            padding: 10px;
-            text-align: center;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
+        background-color: #f2f2f2;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 1;
         }
+
 
         .grid-container {
             display: flex;

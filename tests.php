@@ -106,8 +106,9 @@
             }
 
             
-            $sql = "SELECT tests.*, planes.*
-                    FROM flights, tests, planes
+            $sql = "SELECT tests.*
+                    FROM tests
+                    INNER JOIN flights ON flights.flights_id = tests.flights_id_con
                     WHERE flights.origin = 'Athens' AND flights.date = '2023-03-18';";
 
             
@@ -119,7 +120,7 @@
                 while ($row = $result->fetch_assoc()) {
                     $tests_id = $row['tests_id'];
                     $test_name = $row['test_name'];
-                    $section_number = $row['section_numbers'];
+                    $section_number = $row['section_number'];
                     $part_of_airplane_examined = $row['part_of_airplane_examined'];
                     $technician_performing_test_id = $row['technician_performing_test_id'];
                     $completion_date = $row['completion_date'];
