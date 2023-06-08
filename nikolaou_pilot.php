@@ -68,6 +68,7 @@
             background-color: #f9f9f9;
         }
 
+
         .return-link {
             text-align: center;
             margin-top: 20px;
@@ -100,6 +101,8 @@
         <h1>Airport DB User Group III</h1>
     </header>
 
+    <h2 style="text-align: center;">Σε ποια συνέδρια συμμετείχε η πιλότος Νικολάου;</h2>
+
     <nav>
         <form class="search-form" method="POST" action="">
             <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
@@ -111,8 +114,6 @@
         </form>
     </nav>
         
-    <h2 style="text-align: center;">Σε ποια συνέδρια συμμετείχε η πιλότος Νικολάου;</h2>
-
 
     <table class="grid-container center-table">
         <tr>
@@ -137,33 +138,34 @@
             }
             
 
-                $sql = "SELECT meeting_date, meeting_subject
-                        FROM pilot_meetings
-                        WHERE pilots_surname = '$surname'
-                        ORDER BY meeting_date ASC;";
+            $sql = "SELECT meeting_date, meeting_subject
+                    FROM pilot_meetings
+                    WHERE pilots_surname = '$surname'
+                    ORDER BY meeting_date ASC;";
 
             
-                $result = $conn->query($sql);
+            $result = $conn->query($sql);
 
            
-                if ($result->num_rows > 0) {
-                
-                    while ($row = $result->fetch_assoc()) {
-                        $meeting_date = $row['meeting_date'];
-                        $meeting_subject = $row['meeting_subject'];
-                        
+            if ($result->num_rows > 0) {
+            
+                while ($row = $result->fetch_assoc()) {
+                    $meeting_date = $row['meeting_date'];
+                    $meeting_subject = $row['meeting_subject'];
+                    
 
-                        echo '<tr>
-                            <td>' . $meeting_date. '</td>
-                            <td>' . $meeting_subject . '</td>
-                        </tr>';
-                    }
+                    echo '<tr>
+                        <td>' . $meeting_date. '</td>
+                        <td>' . $meeting_subject . '</td>
+                    </tr>';
+                }
 
-                } else {
+            } else {
                 echo '<tr><td colspan="2">Δεν βρέθηκαν εγγραφές για την παραπάνω πιλότο 😞</td></tr>';
             }
 
-            
+            echo '</table>';
+
             $conn->close();
         ?>
     </table>

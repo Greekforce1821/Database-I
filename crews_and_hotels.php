@@ -106,14 +106,12 @@
         <h1>Airport DB User Group III</h1>
     </header>
 
+    <h2 style="text-align: center;">Ποια είναι τα πληρώματα των πτήσεων που αναχωρούν στις 13/06/2023 από Αθήνα για Κέρκυρα και σε ποιο ξενοδοχείο μένουν;</h2>
+
     <nav>
         <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
         <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
-    </nav>
-        
-    <h2 style="text-align: center;">Ποια είναι τα πληρώματα των πτήσεων που αναχωρούν στις 13/06/2023 από Αθήνα για Κέρκυρα και σε ποιο ξενοδοχείο μένουν;</h2>
-
-    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="search-form">
+        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="search-form">
         <br><br>
         <input type="text" id="origin" name="origin" class="search-input" placeholder="Origin -> Athens" required>
         <br><br>
@@ -123,6 +121,8 @@
         <br><br>
         <button type="submit" class="search-button">Αναζήτηση</button>
     </form>
+    </nav>
+        
 
     <table class="grid-container center-table">
         <tr>

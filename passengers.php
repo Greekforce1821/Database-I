@@ -109,7 +109,6 @@
             <br><br>
             <input type="text" id="origin" name="origin" class="search-input" placeholder="Destination -> Athens" required>
             <br><br>
-
             <input type="date" id="date" name="date" class="search-input" placeholder="Ημερομηνία" required>
             <br><br>
             <button type="submit" class="search-button">Αναζήτηση</button>

@@ -72,6 +72,27 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .search-form {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #f2f2f2;
+        }
+
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -79,44 +100,54 @@
         <h1>Airport DB User Group III</h1>
     </header>
 
-    <nav>
-        <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
-        <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
-    </nav>
-        
     <h2 style="text-align: center;">Ποια ήταν τα test που έγιναν σε όλα τα αεροπλάνα που αναχώρησαν από την Αθήνα στις 18/03/2023;</h2>
+
+    <nav>
+         <form class="search-form" method="POST" action="">
+            <a href="https://ionio.gr" target="_blank"><img class="logo-image" src="images/uni-logo.png" alt="Logo"></a>
+            <a href="https://di.ionio.gr" target="_blank"><img class="right-logo-image" src="images/di.jpg" alt="DI Logo" style="width: 300px;"></a>
+            <br><br>
+            <input type="text" id="origin" name="origin" class="search-input" placeholder="Origin -> Athens" required>
+            <br><br>
+            <input type="date" id="date" name="date" class="search-input" placeholder="Ημερομηνία" required>
+            <br><br>
+            <button type="submit" class="search-button">Αναζήτηση</button>
+        </form>
+    </form>
+    </nav>
 
 
     <table class="grid-container center-table">
-        <tr>
-            <th>Αριθμοί των Test</th>
-            <th>Όνοματα των Test</th>
-            <th>Αριθμοί τμημάτων των Test</th>
-            <th>Μέρη των αεροπλάνων που ελέγχθηκαν</th>
-            <th>Αριθμοί των Ελεγκτών κατά την διάρκεια των Τest</th>
-            <th>Ημερομηνία ολοκλήρωσης των Test</th>
-            <th>Αποτελέσματα των Test</th>
-        </tr>
-        <?php
-           
-            include 'connDB.php';
+    <?php
+        include 'connDB.php';
 
-            if ($conn->connect_error) {
-                die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
-            }
+        if ($conn->connect_error) {
+            die('Σφάλμα κατά τη σύνδεση με τη βάση δεδομένων: ' . $conn->connect_error);
+        }
 
-            
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $origin = $_POST["origin"];
+            $date = $_POST["date"];
+
             $sql = "SELECT tests.*
                     FROM tests
                     INNER JOIN flights ON flights.flights_id = tests.flights_id_con
-                    WHERE flights.origin = 'Athens' AND flights.date = '2023-03-18';";
+                    WHERE flights.origin = '$origin' AND flights.date = '$date';";
 
-            
             $result = $conn->query($sql);
 
-           
             if ($result->num_rows > 0) {
-                
+                echo '
+                    <tr>
+                        <th>Αριθμοί των Test</th>
+                        <th>Όνοματα των Test</th>
+                        <th>Αριθμοί τμημάτων των Test</th>
+                        <th>Μέρη των αεροπλάνων που ελέγχθηκαν</th>
+                        <th>Αριθμοί των Ελεγκτών κατά την διάρκεια των Τest</th>
+                        <th>Ημερομηνία ολοκλήρωσης των Test</th>
+                        <th>Αποτελέσματα των Test</th>
+                    </tr>';
+
                 while ($row = $result->fetch_assoc()) {
                     $tests_id = $row['tests_id'];
                     $test_name = $row['test_name'];
@@ -125,9 +156,8 @@
                     $technician_performing_test_id = $row['technician_performing_test_id'];
                     $completion_date = $row['completion_date'];
                     $test_result = $row['test_result'];
-                    
 
-                        echo '<tr>
+                    echo '<tr>
                             <td>' . $tests_id . '</td>
                             <td>' . $test_name . '</td>
                             <td>' . $section_number . '</td>
@@ -137,15 +167,16 @@
                             <td>' . $test_result . '</td>
                         </tr>';
                 }
-
             } else {
-                echo '<tr><td colspan="4">Δεν βρέθηκαν εγγραφές για τα παραπάνω Test 😞</td></tr>';
+                echo '<tr><td colspan="7">Δεν βρέθηκαν εγγραφές για τα παραπάνω Test 😞</td></tr>';
             }
+        }
 
-            
-            $conn->close();
-        ?>
-    </table>
+        $conn->close();
+    ?>
+</table>
+
+
 
     
     <div class="return-link">
