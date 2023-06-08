@@ -130,31 +130,36 @@
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $surname = $_POST["surname"];
-            }
-
-            $sql = "SELECT meeting_date, meeting_subject
-                    FROM pilot_meetings
-                    WHERE pilots_surname = '$surname'
-                    ORDER BY meeting_date ASC;";
-
-            
-            $result = $conn->query($sql);
-
-           
-            if ($result->num_rows > 0) {
-                
-                while ($row = $result->fetch_assoc()) {
-                    $meeting_date = $row['meeting_date'];
-                    $meeting_subject = $row['meeting_subject'];
-                    
-
-                    echo '<tr>
-                        <td>' . $meeting_date. '</td>
-                        <td>' . $meeting_subject . '</td>
-                    </tr>';
-                }
 
             } else {
+
+                $surname = ""; 
+            }
+            
+
+                $sql = "SELECT meeting_date, meeting_subject
+                        FROM pilot_meetings
+                        WHERE pilots_surname = '$surname'
+                        ORDER BY meeting_date ASC;";
+
+            
+                $result = $conn->query($sql);
+
+           
+                if ($result->num_rows > 0) {
+                
+                    while ($row = $result->fetch_assoc()) {
+                        $meeting_date = $row['meeting_date'];
+                        $meeting_subject = $row['meeting_subject'];
+                        
+
+                        echo '<tr>
+                            <td>' . $meeting_date. '</td>
+                            <td>' . $meeting_subject . '</td>
+                        </tr>';
+                    }
+
+                } else {
                 echo '<tr><td colspan="2">Δεν βρέθηκαν εγγραφές για την παραπάνω πιλότο 😞</td></tr>';
             }
 
