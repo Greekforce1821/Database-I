@@ -1,8 +1,8 @@
 <?php 
 	$servername = 'localhost';
-	$username = 'skokotos.com';
-	$password = 'NO9BJl0LLM4^h';
-	$dbname = 'airport_db';
+	$username = 'root';
+	$password = '';
+	$dbname = 'airport db';
 	
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	
