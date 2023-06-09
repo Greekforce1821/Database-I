@@ -122,7 +122,7 @@
         $date = $_POST["date"];
 
 
-        $sql = "SELECT flights.flight_number, flights.date, gates.gate_name 
+        $sql = "SELECT flights.flight_number, flights.date, flights.departure_time, gates.gate_name 
                 FROM flights 
                 INNER JOIN gates ON flights.gate_id = gates.gates_id 
                 WHERE flights.origin = '$origin' AND flights.destination = '$destination' AND flights.date = '$date' ";
@@ -147,12 +147,14 @@
             foreach ($flights as $flight) {
                 $flight_number = $flight['flight_number'];
                 $date = $flight['date'];
+                $departure_time = $flight['departure_time'];
                 $gate_name = $flight['gate_name'];
 
               
                 echo '<div class="grid-item">
                         <p>Αριθμός πτήσης: ' . $flight_number . '</p>
                         <p>Ημερομηνία αναχώρησης: ' . $date . '</p>
+                        <p>Ώρα αναχώρησης: ' . $departure_time . '</p>
                         <p>Πύλη εξόδου: ' . $gate_name . '</p>
                     </div>';
             }
