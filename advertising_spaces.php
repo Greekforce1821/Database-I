@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
+    <link rel="icon" href="images/airplane-icon.ico" type="image/x-icon">
     <title>Πόσοι από τους διαφημιστικούς χώρους είναι ενοικιασμένοι και ποιό το μέσο ενοίκιο τους;</title>    
     <style>
         body {

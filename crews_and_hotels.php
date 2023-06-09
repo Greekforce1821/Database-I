@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
+    <link rel="icon" href="images/airplane-icon.ico" type="image/x-icon">
     <title>Ποια είναι τα πληρώματα των πτήσεων που αναχωρούν στις 13/06/2023 από Αθήνα για Κέρκυρα και σε ποιο ξενοδοχείο μένουν;</title>    
     <style>
         body {

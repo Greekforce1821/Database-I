@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
+    <link rel="icon" href="images/airplane-icon.ico" type="image/x-icon">
     <title>Ποιες είναι οι πτήσεις που αναχωρούν την Τρίτη 13/06/2023 από την Αθήνα για Κέρκυρα;</title>    
     <style>
         body {

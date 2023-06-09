@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
+    <link rel="icon" href="images/airplane-icon.ico" type="image/x-icon">
     <title>Ποια ήταν τα test που έγιναν σε όλα τα αεροπλάνα που αναχώρησαν από την Αθήνα στις 18/03/2023;</title>    
     <style>
         body {

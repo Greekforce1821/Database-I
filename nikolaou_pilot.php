@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
+    <link rel="icon" href="images/airplane-icon.ico" type="image/x-icon">
     <title>Σε ποια συνέδρια συμμετείχε η πιλότος Νικολάου;</title>    
     <style>
         body {

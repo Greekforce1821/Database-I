@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
+    <link rel="icon" href="images/airplane-icon.ico" type="image/x-icon">
     <title>Ποιοι ταξιδιώτες ταξιδεύουν προς την Αθήνα στις 17/04/2023;</title>    
     <style>
         body {
